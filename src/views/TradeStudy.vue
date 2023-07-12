@@ -1,0 +1,1 @@
+<template>This is trade study</template>

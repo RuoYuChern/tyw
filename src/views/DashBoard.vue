@@ -1,0 +1,1 @@
+<template>This dash board</template>
