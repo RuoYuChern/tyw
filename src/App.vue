@@ -43,7 +43,6 @@ import PageSide from './components/PageSide.vue';
 
 .layout-content{
   margin-left: 10px;
-  background-color: #FFF;
 }
 
 .layout-header {
