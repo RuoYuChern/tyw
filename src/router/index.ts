@@ -6,6 +6,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      name: '/',
+      component: ()=> import('../views/HomeSpace.vue')      
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: ()=> import('../views/DashBoard.vue')
@@ -34,6 +39,16 @@ const router = createRouter({
       path: '/up-down',
       name: 'up-down',
       component: ()=> import('../views/UpDown.vue')
+    },
+    {
+      path: '/symbol',
+      name: 'symbol',
+      props: route => ({ foo: route.query.q }),
+      meta: {
+          title: '个股详情', 
+          target: '_blank'
+      },
+      component: ()=> import('../views/SymbolTrend.vue')
     },
   ]
 })

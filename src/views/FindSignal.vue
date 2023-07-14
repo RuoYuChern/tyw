@@ -10,14 +10,14 @@
         <a-divider type="vertical" />
         <a-col :span="6">
             <h4>查询下一页:</h4>
-            <a-button type="ghost" size="middle" @click="prexPageClick" :disabled="prePageBtnStatus">
+            <a-button type="primary" ghost size="middle" @click="prexPageClick" :disabled="prePageBtnStatus">
                 <template #icon>
                     <LeftOutlined />
                 </template>
                 上一页
             </a-button>
             <a-divider type="vertical" />
-            <a-button type="ghost" size="middle" @click="nextPageClick" :disabled="nextPageBtnStatus">
+            <a-button type="primary" ghost size="middle" @click="nextPageClick" :disabled="nextPageBtnStatus">
                 <template #icon>
                     <RightOutlined />
                 </template>
@@ -28,7 +28,7 @@
     <a-table :dataSource="dataSource" :columns="columns" :pagination="pagination" class="data-row">
         <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'name'">
-                <a>{{ text }}</a>
+                <a :href="`/symbol?q=${text}`" target="_blank">{{ text }}</a>
             </template>
         </template>
     </a-table>
@@ -38,6 +38,8 @@
 import {defineComponent, ref, type Ref } from 'vue';
 import {LeftOutlined, RightOutlined} from '@ant-design/icons-vue';
 import {HttpGet} from '../utils/Axios'
+import {selectKeysStore} from '../stores/stores'
+
 interface DataItem {
     symbol: string;
     name: string;
@@ -93,6 +95,8 @@ export default defineComponent({
         }
     },
     beforeMount() {
+        const keys = selectKeysStore()
+        keys.setKeys(['Signal'])
         this.getData()  
     },
     methods:{

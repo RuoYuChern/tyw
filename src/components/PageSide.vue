@@ -4,7 +4,7 @@
             <MenuUnfoldOutlined v-if="collapsed" />
             <MenuFoldOutlined v-else />
         </a-button>
-        <a-menu v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" mode="inline" theme="light" :inline-collapsed="collapsed">
+        <a-menu v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys.keys" mode="inline" theme="light" :inline-collapsed="collapsed" @select="subMenuSelect">
             <a-menu-item key="DashBoard">
                 <template #icon>
                     <DashboardOutlined />
@@ -58,6 +58,7 @@ import {
   FlagFilled,
   LikeOutlined,
 } from '@ant-design/icons-vue';
+import {selectKeysStore} from '../stores/stores'
 
 export default defineComponent({
   components: {
@@ -73,11 +74,11 @@ export default defineComponent({
   setup() {
     const state = reactive({
       collapsed: false,
-      selectedKeys: ['DashBoard'],
+      selectedKeys: selectKeysStore(),
       openKeys: [],
       preOpenKeys: [],
     });
-
+    
     watch(
       () => state.openKeys,
       (_val, oldVal) => {
@@ -94,5 +95,10 @@ export default defineComponent({
       toggleCollapsed,
     };
   },
+  methods:{
+    subMenuSelect(e:any){
+      this.selectedKeys.setKeys(e.selectedKeys)
+    }
+  }
 });
-</script>
+</script>../stores/stores

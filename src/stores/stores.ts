@@ -7,6 +7,13 @@ export const useCounterStore = defineStore('counter', () => {
   function increment() {
     count.value++
   }
-
   return { count, doubleCount, increment }
+})
+
+export const selectKeysStore = defineStore('selectKeys', ()=>{
+  const keys = ref([''])
+  function setKeys(newKeys:string[]) {
+      keys.value = newKeys
+  }
+  return {keys, setKeys}
 })
