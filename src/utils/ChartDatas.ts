@@ -6,7 +6,7 @@ export class MixLineChartOption{
     dataLabels: any= {enabled: false};
     labels: string[] = [];
     xaxis:any= {type: 'date'};
-    // yaxis: any[] = [{title: {text: 'Website Blog',},},{opposite: true,title: { text: 'Social Media'}}]    
+    yaxis: any[] = [{title: {text: 'Website Blog',},},{opposite: true,title: { text: 'Social Media'}}]    
 }
 
 export class LineChartOption{
