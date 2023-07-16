@@ -53,7 +53,6 @@ export default defineComponent({
         //let stock = formState.stock
         let stock = this.foo
         let apiUrl = `/taiyi/hq/get-trend?stock=${stock}`
-        console.log("created")
         HttpGet(apiUrl, (rsp:any)=>{
             let lablas:string [] = []
             const openList = toSeries("开盘价","line");
