@@ -1,6 +1,6 @@
+// import { userTokenStore } from '@/stores/stores'
+import { userTokenStore } from '@/stores/stores'
 import { createRouter, createWebHistory } from 'vue-router'
-
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,7 +55,38 @@ const router = createRouter({
       name:"hot-symbol",
       component: ()=> import('../views/HotSymbol.vue')
     },
+    {
+      path:"/user-register",
+      name:"user-register",
+      component: ()=> import('../views/UserRegister.vue')
+    },
+    {
+      path:"/user-login",
+      name:"user-login",
+      component: ()=> import('../views/UserLogin.vue')
+    },
+    {
+      path:"/do-trading",
+      name:"do-trading",
+      component: ()=> import('../views/DoTrading.vue'),
+      meta:{
+        requiresAuth:true 
+      }
+    },            
   ]
+})
+
+router.beforeEach((to, from, next) =>{
+  if(to.meta.requiresAuth){
+      const userToken = userTokenStore()
+      if(!userToken.isAuth()){
+        next({name:'user-login', query: {redirect: to.fullPath}})
+      }else{
+        next()
+      }
+  }else{
+      next()
+  }
 })
 
 export default router

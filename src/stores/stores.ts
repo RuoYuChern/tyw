@@ -17,3 +17,21 @@ export const selectKeysStore = defineStore('selectKeys', ()=>{
   }
   return {keys, setKeys}
 })
+
+export const userTokenStore = defineStore('userToken', ()=>{
+  const tokens = ref('')
+  function setToken(token:string) {
+    tokens.value = token
+    sessionStorage.setItem('tyw.token', token)
+  }
+  function isAuth():boolean{
+    if(tokens.value === ''){
+        const tk = sessionStorage.getItem('tyw.token')
+        if(tk !== null){
+          tokens.value = tk
+        }
+    }
+    return (tokens.value !== '')
+  }
+  return {tokens, isAuth, setToken} 
+})

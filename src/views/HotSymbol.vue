@@ -19,8 +19,8 @@ interface DataItem {
     vol:    number;
     hot:   number;
     hotDays:number;    
-    lowday: string;
-    highday: string;
+    lowDay: string;
+    highDay: string;
 
 }
 
@@ -42,14 +42,17 @@ export default defineComponent({
         },{
             title: '热度值',
             dataIndex: 'hot',
-        },                
+        },{
+            title: '上榜天数',
+            dataIndex: 'hotDays',
+        },                      
         {
             title: '开始',
-            dataIndex: 'lowday',
-            sorter: (a:any, b:any) => { return a.lowday.localeCompare(b.lowday)}
+            dataIndex: 'lowDay',
+            sorter: (a:any, b:any) => { return a.lowDay.localeCompare(b.lowDay)}
         },{
             title: '最后',
-            dataIndex: 'highday',
+            dataIndex: 'highDay',
         }
         ];  
         const hotSource:Ref<DataItem[]> =ref([]);              

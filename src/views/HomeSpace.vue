@@ -48,7 +48,7 @@ import PageSide from '../components/PageSide.vue';
 .layout-header {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   margin: 0 10px;
   background-color: #FFF;
 }
