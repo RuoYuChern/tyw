@@ -1,10 +1,10 @@
 <template>
     <a-row class="kline-row">
         <a-col span="8">
-            <div id="volChart" v-if="volSeries.length > 0">
-                <apexchart type="line" height="350" :options="mixLineOpt" :series="volSeries"></apexchart>
+            <div id="moodChart" v-if="moodSeries.length > 0">
+                <apexchart type="line" height="350" :options="chartLineOpt" :series="moodSeries"></apexchart>
             </div>
-            <div id="volChart" v-else>No Data</div>            
+            <div id="moodChart" v-else>No Data</div>        
         </a-col>         
         <a-col span="8">
             <div id="upDownChart" v-if="upDownSeries.length > 0">
@@ -21,11 +21,17 @@
     </a-row>
     <a-row class="kline-row">
         <a-col span="8">
-            <div id="moodChart" v-if="moodSeries.length > 0">
-                <apexchart type="line" height="350" :options="chartLineOpt" :series="moodSeries"></apexchart>
+            <div id="volChart" v-if="volSeries.length > 0">
+                <apexchart type="line" height="350" :options="mixLineOpt" :series="volSeries"></apexchart>
             </div>
-            <div id="moodChart" v-else>No Data</div>            
-        </a-col>        
+            <div id="volChart" v-else>No Data</div>                  
+        </a-col>
+        <a-col span="8">
+            <div id="topVolChart" v-if="topSeries.length > 0">
+                <apexchart type="line" height="350" :options="chartLineOpt" :series="topSeries"></apexchart>
+            </div>
+            <div id="topVolChart" v-else>No Data</div>                  
+        </a-col>                 
     </a-row>    
 </template>
 
@@ -40,16 +46,18 @@ export default defineComponent({
         apexchart: VueApexCharts
     },
     setup(){
-        const mixLineOpt = shallowRef(toMixOption(""))
-        const chartLineOpt = shallowRef(toLinOption(""))
+        const mixLineOpt = shallowRef(toMixOption("大盘"))
+        const chartLineOpt = shallowRef(toLinOption("大盘"))
         const volSeries:Ref<NamedSeries[]> = ref([])
         const upDownSeries:Ref<NamedSeries[]> = ref([])
         const limitSeries:Ref<NamedSeries[]> = ref([])
         const moodSeries:Ref<NamedSeries[]> = ref([])
+        const topSeries:Ref<NamedSeries[]> = ref([])
         return{
             mixLineOpt,
             chartLineOpt,
             volSeries,
+            topSeries,
             upDownSeries,
             limitSeries,
             moodSeries
@@ -62,7 +70,7 @@ export default defineComponent({
         HttpGet(apiUrl, (rsp:any)=>{
             const lablas:string [] = []
             const amount    = toSeries("成交额(千万)","column");
-            const vol    = toSeries("成交量(万手)","line");
+            const vol    = toSeries("总成交量(万手)","line");
             const topVol = toSeries("Top20成交量(万手)","line");
             const downStocks = toSeries("下跌股票","line");
             const upStocks = toSeries("上涨股票","line");
@@ -83,13 +91,16 @@ export default defineComponent({
             })
             this.chartLineOpt.xaxis.categories = lablas
             this.mixLineOpt.labels = lablas
-            this.mixLineOpt.yaxis[0].title.text = "成交量(万手)"
-            this.mixLineOpt.yaxis[1].title.text = "成交额(千万)"
+            this.mixLineOpt.yaxis[0].title.text = "成交额(千万)"
+            this.mixLineOpt.yaxis[1].title.text = "成交量(万手)"
 
             this.volSeries.length = 0
             this.volSeries.push(amount)
             this.volSeries.push(vol)
-            this.volSeries.push(topVol)
+
+            this.topSeries.length = 0
+            this.topSeries.push(topVol)
+            this.topSeries.push(vol)
 
             this.upDownSeries.length = 0
             this.upDownSeries.push(downStocks)

@@ -29,18 +29,24 @@
                 </template>
                 <router-link to="/double-trend">趋势对比</router-link>
             </a-menu-item>  
-            <a-menu-item key="TradeStudy">
+            <a-menu-item key="HotSymbol">
                 <template #icon>
-                    <FlagFilled />
+                    <FireOutlined />
                 </template>
-                <router-link to="/trade-study">交易研究</router-link>
-            </a-menu-item>  
+                <router-link to="/hot-symbol">热股</router-link>
+            </a-menu-item>              
             <a-menu-item key="UpDown">
                 <template #icon>
                     <LikeOutlined />
                 </template>
                 <router-link to="/up-down">涨跌停</router-link>
-            </a-menu-item>                                                         
+            </a-menu-item> 
+            <a-menu-item key="TradeStudy">
+                <template #icon>
+                    <FlagFilled />
+                </template>
+                <router-link to="/trade-study">交易研究</router-link>
+            </a-menu-item>                                                                     
         </a-menu>
    </div>
 </template>
@@ -57,6 +63,7 @@ import {
   BarChartOutlined,
   FlagFilled,
   LikeOutlined,
+  FireOutlined
 } from '@ant-design/icons-vue';
 import {selectKeysStore} from '../stores/stores'
 
@@ -69,7 +76,8 @@ export default defineComponent({
     RiseOutlined,
     BarChartOutlined,
     FlagFilled,
-    LikeOutlined
+    LikeOutlined,
+    FireOutlined
   },
   setup() {
     const state = reactive({

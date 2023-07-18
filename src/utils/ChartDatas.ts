@@ -3,7 +3,7 @@ export class MixLineChartOption{
     chart:any = { height: 350,type: 'line',};
     stroke:any= {width: [0, 4]};
     title: any= {text: 'Line'};
-    dataLabels: any= {enabled: false};
+    dataLabels: any= {enabled: false, enabledOnSeries: [1]};
     labels: string[] = [];
     xaxis:any= {type: 'date'};
     yaxis: any[] = [{title: {text: 'Website Blog',},},{opposite: true,title: { text: 'Social Media'}}]    
@@ -18,9 +18,20 @@ export class LineChartOption{
     xaxis:any=  {categories: [],}
 }
 
+export class BarChartOption{
+    chart: any ={type: 'bar',height: 250};
+    plotOptions: any ={bar: {borderRadius: 4,horizontal: true,}};
+    dataLabels: any ={ enabled: false };
+    xaxis: any = { categories: [], }
+}
+
 export class NamedSeries{
     name:string = "";
     type:string = "";
+    data:number[] = []
+}
+
+export class BarSeries{
     data:number[] = []
 }
 
@@ -41,4 +52,12 @@ export const toSeries = (name:string, type:string)=>{
     ns.name = name
     ns.type = type
     return ns 
+}
+
+export const toBarOption =()=>{
+    return new BarChartOption()
+}
+
+export const toBarSeries = ()=>{
+    return new BarSeries()
 }

@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: '/',
-      component: ()=> import('../views/HomeSpace.vue')      
+      component: ()=> import('../views/DashBoard.vue')     
     },
     {
       path: '/dashboard',
@@ -49,6 +49,11 @@ const router = createRouter({
           target: '_blank'
       },
       component: ()=> import('../views/SymbolTrend.vue')
+    },
+    {
+      path:"/hot-symbol",
+      name:"hot-symbol",
+      component: ()=> import('../views/HotSymbol.vue')
     },
   ]
 })

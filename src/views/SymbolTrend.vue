@@ -77,7 +77,7 @@ export default defineComponent({
             this.mixLineOpt.labels = lablas
             this.chartLineOpt.title.text = stock
             this.mixLineOpt.title.text = stock
-            this.mixLineOpt.yaxis[0].title.text = "vol"
+            this.mixLineOpt.yaxis[0].title.text = "成交量"
             this.mixLineOpt.yaxis[1].title.text = "价格"
             
             this.priceSeries.length = 0
@@ -85,7 +85,7 @@ export default defineComponent({
             this.priceSeries.push(close)
             this.priceSeries.push(lsma)
             this.priceSeries.push(ssma)
-            this.priceSeries.push(mtn)
+            //this.priceSeries.push(mtn)
 
             this.maSeries.length = 0
             this.maSeries.push(vol)

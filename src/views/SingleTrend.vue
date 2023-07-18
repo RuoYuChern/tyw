@@ -117,7 +117,7 @@ export default defineComponent({
                 priceSeries.value.push(close)
                 priceSeries.value.push(lsma)
                 priceSeries.value.push(ssma)
-                priceSeries.value.push(mtn)
+                //priceSeries.value.push(mtn)
 
                 volSeries.value.length = 0
                 volSeries.value.push(vol)
