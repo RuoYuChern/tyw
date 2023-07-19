@@ -16,12 +16,10 @@ import { defineComponent, ref, type Ref} from 'vue';
 interface DataItem {
     symbol: string;
     name:   string;
+    day:    string; 
     vol:    number;
-    hot:   number;
-    hotDays:number;    
-    lowDay: string;
-    highDay: string;
-
+    open:   number;
+    close:  number;
 }
 
 export default defineComponent({
@@ -40,19 +38,15 @@ export default defineComponent({
             title: '交易量(手)',
             dataIndex: 'vol',
         },{
-            title: '热度值',
-            dataIndex: 'hot',
+            title: '开盘价',
+            dataIndex: 'open',
         },{
-            title: '上榜天数',
-            dataIndex: 'hotDays',
-        },                      
-        {
-            title: '开始',
-            dataIndex: 'lowDay',
-            sorter: (a:any, b:any) => { return a.lowDay.localeCompare(b.lowDay)}
+            title: '收盘价',
+            dataIndex: 'close',
         },{
-            title: '最后',
-            dataIndex: 'highDay',
+            title: '交易日',
+            dataIndex: 'day',
+            sorter: (a:any, b:any) => { return a.day.localeCompare(b.day)}
         }
         ];  
         const hotSource:Ref<DataItem[]> =ref([]);              

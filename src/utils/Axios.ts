@@ -1,6 +1,6 @@
 import { userTokenStore } from '@/stores/stores';
 import axios from 'axios';
-import {Md5} from 'ts-md5/dist/md5'
+import {Md5} from 'ts-md5'
 
   const config = {
     headers:{
