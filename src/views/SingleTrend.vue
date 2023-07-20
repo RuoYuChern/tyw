@@ -29,12 +29,18 @@
         </a-col>       
     </a-row>
     <a-row class="kline-row">
-        <a-col span="24">
+        <a-col span="12">
             <div id="volChart" v-if="volSeries.length > 0">
                 <apexchart type="line" height="350" :options="mixLineOpt" :series="volSeries"></apexchart>
             </div>
             <div id="volChart" v-else>No Data</div>
-        </a-col> 
+        </a-col>
+        <a-col span="12">
+            <div id="fundInChart" v-if="fundInSeries.length > 0">
+                <apexchart type="line" height="350" :options="mixLineOpt" :series="fundInSeries"></apexchart>
+            </div>
+            <div id="fundInChart" v-else>No Data</div>
+        </a-col>          
     </a-row>
 </template>
 
@@ -66,12 +72,14 @@ export default defineComponent({
         const hld      = toSeries("高低差","column");
         const lsma     = toSeries("SMA-10","line");
         const ssma     = toSeries("SMA-8","line");
+        const fund     = toSeries("资金流向","line");
         const mtn      = toSeries("动量","column"); 
         const chartLineOpt = shallowRef(toLinOption(""))
         const mixLineOpt = shallowRef(toMixOption(""))
         const priceSeries:Ref<NamedSeries[]> = ref([])
         const volSeries:Ref<NamedSeries[]> = ref([])
         const mtnSeries:Ref<NamedSeries[]> = ref([])
+        const fundInSeries:Ref<NamedSeries[]> = ref([])
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const handleFinish: FormProps['onFinish'] = _values => {
             const stock = formState.stock
@@ -98,6 +106,7 @@ export default defineComponent({
                     lsma.data.push(val.lsma)
                     ssma.data.push(val.ssma)
                     mtn.data.push(val.mtn)
+                    fund.data.push(val.fundIn)
                 })
                 const lineOpt = toLinOption("")
                 lineOpt.xaxis.categories = lablas
@@ -106,8 +115,8 @@ export default defineComponent({
                 const mixOpt = toMixOption("")
                 mixOpt.labels = lablas
                 mixOpt.title.text = stock
-                mixOpt.yaxis[0].title.text = "vol"
-                mixOpt.yaxis[1].title.text = "价格"
+                mixOpt.yaxis[0].title.text = "成交量(万手)"
+                mixOpt.yaxis[1].title.text = "价格/资金(千万)"
 
                 chartLineOpt.value = lineOpt
                 mixLineOpt.value = mixOpt
@@ -122,6 +131,10 @@ export default defineComponent({
                 volSeries.value.length = 0
                 volSeries.value.push(vol)
                 volSeries.value.push(close)
+
+                fundInSeries.value.length = 0
+                fundInSeries.value.push(vol)
+                fundInSeries.value.push(fund)
 
                 mtnSeries.value.length = 0
                 mtnSeries.value.push(close)
@@ -148,7 +161,8 @@ export default defineComponent({
             mixLineOpt,
             priceSeries,
             volSeries,
-            mtnSeries 
+            mtnSeries,
+            fundInSeries 
         };
     },
     beforeCreate() {

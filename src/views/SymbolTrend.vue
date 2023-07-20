@@ -12,11 +12,17 @@
         </a-col>       
     </a-row>
     <a-row class="kline-row">
-        <a-col span="24">
+        <a-col span="12">
             <div id="maChart" v-if="maSeries.length > 0">
                 <apexchart type="line" height="350" :options="mixLineOpt" :series="maSeries"></apexchart>
             </div>
         </a-col> 
+        <a-col span="12">
+            <div id="fundInChart" v-if="fundInSeries.length > 0">
+                <apexchart type="line" height="350" :options="mixLineOpt" :series="fundInSeries"></apexchart>
+            </div>
+            <div id="fundInChart" v-else>No Data</div>
+        </a-col>         
     </a-row>
 </template>
 
@@ -40,12 +46,14 @@ export default defineComponent({
         const priceSeries:Ref<NamedSeries[]> = ref([])
         const maSeries:Ref<NamedSeries[]> = ref([])
         const mtnSeries:Ref<NamedSeries[]> = ref([])
+        const fundInSeries:Ref<NamedSeries[]> = ref([])
         return{
             chartLineOpt,
             priceSeries,
             maSeries,
             mixLineOpt,
-            mtnSeries 
+            mtnSeries,
+            fundInSeries 
         };
     },
     beforeMount(){
@@ -62,6 +70,7 @@ export default defineComponent({
             const lsma     = toSeries("SMA-10","line");
             const ssma     = toSeries("SMA-8","line");
             const mtn      = toSeries("动量","column"); 
+            const fund     = toSeries("资金流向","line");
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             rsp.forEach((val:any, _idx:number, _array:[]) =>{
                 lablas.push(val.day)
@@ -72,13 +81,14 @@ export default defineComponent({
                 lsma.data.push(val.lsma)
                 ssma.data.push(val.ssma)
                 mtn.data.push(val.mtn)
+                fund.data.push(val.fundIn)
             })
             this.chartLineOpt.xaxis.categories = lablas
             this.mixLineOpt.labels = lablas
             this.chartLineOpt.title.text = stock
             this.mixLineOpt.title.text = stock
-            this.mixLineOpt.yaxis[0].title.text = "成交量"
-            this.mixLineOpt.yaxis[1].title.text = "价格"
+            this.mixLineOpt.yaxis[0].title.text = "成交量(万手)"
+            this.mixLineOpt.yaxis[1].title.text = "价格/资金(千万)"
             
             this.priceSeries.length = 0
             this.priceSeries.push(openList)
@@ -92,6 +102,10 @@ export default defineComponent({
             this.maSeries.push(close)
             this.maSeries.push(lsma)
             
+            this.fundInSeries.length = 0
+            this.fundInSeries.push(vol)
+            this.fundInSeries.push(fund)            
+
             this.mtnSeries.length = 0
             this.mtnSeries.push(hld)
             this.mtnSeries.push(mtn)

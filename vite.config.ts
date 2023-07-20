@@ -18,7 +18,8 @@ export default defineConfig({
     port: 9080,
     proxy: {
       '/taiyi': {
-        target: 'http://127.0.0.1:9090',
+        // target: 'http://127.0.0.1:9090',
+        target: 'https://www.taiji666.top/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/taiyi/, '/taiyi'),
       },

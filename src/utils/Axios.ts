@@ -88,7 +88,7 @@ import {Md5} from 'ts-md5'
         userToken.setToken(token)
         call(data)
       }else{
-        console.log("code:", code, "msg:", response.data.msg, ",md5:", md5Pwd)
+        console.log("code:", code, "msg:", response.data.msg)
       }
     }).catch(function (error:any) {console.log("Error:", error);})
   }
