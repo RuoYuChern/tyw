@@ -21,15 +21,29 @@
 
 <script lang="ts">
 import { reactive,defineComponent } from 'vue';
+import {DoGetOrderId, DoAuthPost} from '../utils/Axios'
 interface FormState {
   stock: string;
   price: string;
   vol: string;
+  orderId:string;
 }
 export default defineComponent({
     setup(){
-        const formState = reactive<FormState>({stock: '',price: '',vol: ''});
-        const onFinish = (_: any) => {}
+        const formState = reactive<FormState>({stock: '',price: '',vol: '', orderId: DoGetOrderId()});
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const onFinish = (_: any) => {
+            const apiUrl = "/taiyi/trade/do-trading"
+            const tradeDto = {stock: formState.stock, price:Number(formState.price), vol: Number(formState.vol), orderId:formState.orderId}
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            DoAuthPost(apiUrl, tradeDto, function cb(_rsp:any){
+                formState.stock = ''
+                formState.price = ''
+                formState.vol = ''
+                formState.orderId = DoGetOrderId()
+                console.log('do trading sucessfully');
+            })
+        }
         const onFinishFailed = (errorInfo: any) => {
             console.log('Failed:', errorInfo);
         };        

@@ -19,10 +19,19 @@ export class LineChartOption{
 }
 
 export class BarChartOption{
-    chart: any ={type: 'bar',height: 250};
+    chart: any ={type: 'bar',height: 350};
     plotOptions: any ={bar: {borderRadius: 4,horizontal: true,}};
     dataLabels: any ={ enabled: false };
     xaxis: any = { categories: [], }
+}
+
+export class PieChartOption{
+    chart: any = {width: 350,type: 'pie',};
+    labels: string[] = [];
+    responsive: any = [{
+        breakpoint: 480,
+        options: {chart: {width: 200},legend: {position: 'bottom'}}}
+    ]    
 }
 
 export class NamedSeries{
@@ -56,6 +65,10 @@ export const toSeries = (name:string, type:string)=>{
 
 export const toBarOption =()=>{
     return new BarChartOption()
+}
+
+export const toPieOption =()=>{
+    return new PieChartOption()
 }
 
 export const toBarSeries = ()=>{

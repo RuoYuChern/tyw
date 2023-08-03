@@ -72,6 +72,11 @@ import {Md5} from 'ts-md5'
     }).catch(function (error:any) {console.log("Error:", error);})
   }
 
+  export function DoGetOrderId(){
+    const noice = Date.now().toString(10)
+    return noice
+  }
+
   export function DoLogin(name:string, pwd:string, call:(response:any)=>void){
     const apiUrl = 'taiyi/auth/do-login'
     const noice = Date.now().toString(10)
