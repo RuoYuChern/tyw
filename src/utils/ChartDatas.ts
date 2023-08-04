@@ -25,6 +25,23 @@ export class BarChartOption{
     xaxis: any = { categories: [], }
 }
 
+export class ColumChartOption{
+    chart: any = {type: 'bar',height: 350};
+    plotOptions: any = {
+        bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+        },
+    };
+    dataLabels: any = {enabled: false};
+    stroke: any = {show: true,width: 2,colors: ['transparent']};
+    xaxis: any = { categories: [],}
+    yaxis: any = { title: { text: '$ (thousands)' }};
+    fill: any = { opacity: 1};
+    tooltip: any = { y: { formatter: function (val:any) {return val}}}
+}
+
 export class PieChartOption{
     chart: any = {width: 350,type: 'pie',};
     labels: string[] = [];
@@ -73,4 +90,10 @@ export const toPieOption =()=>{
 
 export const toBarSeries = ()=>{
     return new BarSeries()
+}
+
+export const toColumOption = (title:string)=>{
+    const opt = new ColumChartOption();
+    opt.yaxis.title.text = title
+    return opt 
 }
