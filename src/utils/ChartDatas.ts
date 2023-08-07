@@ -1,6 +1,6 @@
 
 export class MixLineChartOption{
-    chart:any = { height: 350,type: 'line',};
+    chart:any = { height: 300,type: 'line',};
     stroke:any= {width: [0, 4]};
     title: any= {text: 'Line'};
     dataLabels: any= {enabled: false, enabledOnSeries: [1]};
@@ -10,7 +10,7 @@ export class MixLineChartOption{
 }
 
 export class LineChartOption{
-    chart:any = {  height: 350,  type: 'line', zoom: { enabled: false}};
+    chart:any = {  height: 300,  type: 'line', zoom: { enabled: false}};
     dataLabels:any = { enabled: false};
     stroke:any= {curve: 'smooth', width:2};
     title: any= {text: 'Product Trends by Month',align: 'left'}
@@ -19,14 +19,14 @@ export class LineChartOption{
 }
 
 export class BarChartOption{
-    chart: any ={type: 'bar',height: 350};
+    chart: any ={type: 'bar',height: 300};
     plotOptions: any ={bar: {borderRadius: 4,horizontal: true,}};
     dataLabels: any ={ enabled: false };
     xaxis: any = { categories: [], }
 }
 
 export class ColumChartOption{
-    chart: any = {type: 'bar',height: 350};
+    chart: any = {type: 'bar',height: 300};
     plotOptions: any = {
         bar: {
             horizontal: false,
@@ -43,7 +43,7 @@ export class ColumChartOption{
 }
 
 export class PieChartOption{
-    chart: any = {width: 350,type: 'pie',};
+    chart: any = {width: 300,type: 'pie',};
     labels: string[] = [];
     responsive: any = [{
         breakpoint: 480,

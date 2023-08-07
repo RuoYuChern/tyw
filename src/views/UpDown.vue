@@ -1,4 +1,19 @@
 <template>
+     <a-row class="opt-row">
+        <a-form layout="inline" :model="formState" @finish="handleFinish" @finishFailed="handleFinishFailed">
+            <a-form-item>
+                <a-input v-model:value="formState.orderDay" placeholder="20230804">
+                    <template #prefix><CalendarOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
+                </a-input>
+            </a-form-item>
+            <a-form-item>
+                <a-button type="primary" html-type="submit" :disabled="formState.orderDay === ''">
+                    <template #icon><LikeOutlined /></template>
+                    Go
+                </a-button>
+            </a-form-item>             
+        </a-form>
+    </a-row>    
     <a-row :gutter="8">
         <a-col span="12">
             <a-table :dataSource="upSource" :columns="columns" :pagination="pagination" class="data-row">
@@ -25,8 +40,15 @@
 
 <script lang="ts">
 import { selectKeysStore } from '@/stores/stores';
+import type { FormProps } from 'ant-design-vue';
+import { CalendarOutlined} from '@ant-design/icons-vue';
+
 import { HttpGet } from '@/utils/Axios';
-import { defineComponent, ref, type Ref} from 'vue';
+import { defineComponent, reactive, ref, type Ref, type UnwrapRef} from 'vue';
+interface FormState {
+  orderDay: string;
+}
+
 interface DataItem {
     symbol: string;
     name:   string;
@@ -35,6 +57,9 @@ interface DataItem {
 } 
 
 export default defineComponent({
+    components:{
+        CalendarOutlined 
+    },
     setup(){
         const pagination = {
             pageSizeOptions: ['10']
@@ -56,11 +81,34 @@ export default defineComponent({
         ]; 
         const upSource:Ref<DataItem[]> =ref([]);
         const downSource:Ref<DataItem[]> =ref([]);
+        const formState: UnwrapRef<FormState> = reactive({orderDay: ''}); 
+            const handleFinish: FormProps['onFinish'] = () => {
+            const day = formState.orderDay
+            const apiUrl = `/taiyi/hq/get-up-down?orderDay=${day}`
+            HttpGet(apiUrl, (rsp:any)=>{
+                upSource.value.length = 0
+                downSource.value.length = 0
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                rsp.forEach((val:any, _idx:number, _array:[]) => {
+                    if(val.flag === 1){
+                        upSource.value.push(val)
+                    }else{
+                        downSource.value.push(val)                   
+                    }
+                })
+            })            
+        };
+        const handleFinishFailed: FormProps['onFinishFailed'] = () => {
+
+        };             
         return {
             pagination,
+            formState,
             columns,
             upSource,
             downSource,
+            handleFinish,
+            handleFinishFailed
         }        
     },
     beforeMount() {
@@ -82,4 +130,16 @@ export default defineComponent({
 </script>
 
 <style scoped lang="css">
+.opt-row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    background-color: #FFF;
+    height: 60px;
+}
+.data-row{
+    background-color: #FFF;
+    margin-top: 10px;
+}
 </style>
