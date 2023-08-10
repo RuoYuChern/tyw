@@ -28,7 +28,7 @@
 import { selectKeysStore } from '@/stores/stores';
 import { HttpGet } from '@/utils/Axios';
 import type { FormProps } from 'ant-design-vue';
-import { CalendarOutlined} from '@ant-design/icons-vue';
+import { CalendarOutlined, LikeOutlined} from '@ant-design/icons-vue';
 import { defineComponent, reactive, ref, type Ref, type UnwrapRef} from 'vue';
 
 interface FormState {
@@ -46,7 +46,8 @@ interface DataItem {
 
 export default defineComponent({
     components:{
-        CalendarOutlined 
+        CalendarOutlined,
+        LikeOutlined 
     },
     setup(){
         const pagination = {

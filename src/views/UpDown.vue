@@ -16,7 +16,7 @@
     </a-row>    
     <a-row :gutter="8">
         <a-col span="12">
-            <a-table :dataSource="upSource" :columns="columns" :pagination="pagination" class="data-row">
+            <a-table :dataSource="upSource" :columns="columns" :pagination="pagination" size="small" class="data-row">
                 <template #bodyCell="{ column, text }">
                     <template v-if="column.dataIndex === 'name'">
                         <a :href="`/symbol?q=${text}`" target="_blank">{{ text }}</a>
@@ -26,7 +26,7 @@
             </a-table>
         </a-col>
         <a-col span="12">
-            <a-table :dataSource="downSource" :columns="columns" :pagination="pagination" class="data-row">
+            <a-table :dataSource="downSource" :columns="columns" :pagination="pagination" size="small" class="data-row">
                 <template #bodyCell="{ column, text }">
                     <template v-if="column.dataIndex === 'name'">
                         <a :href="`/symbol?q=${text}`" target="_blank">{{ text }}</a>
@@ -41,7 +41,7 @@
 <script lang="ts">
 import { selectKeysStore } from '@/stores/stores';
 import type { FormProps } from 'ant-design-vue';
-import { CalendarOutlined} from '@ant-design/icons-vue';
+import { CalendarOutlined, LikeOutlined} from '@ant-design/icons-vue';
 
 import { HttpGet } from '@/utils/Axios';
 import { defineComponent, reactive, ref, type Ref, type UnwrapRef} from 'vue';
@@ -52,17 +52,21 @@ interface FormState {
 interface DataItem {
     symbol: string;
     name:   string;
+    close:  number;
+    preClose:  number;
+    pctChange:  number;
     day:    string;
     flag:   number;        
 } 
 
 export default defineComponent({
     components:{
-        CalendarOutlined 
+        CalendarOutlined,
+        LikeOutlined 
     },
     setup(){
         const pagination = {
-            pageSizeOptions: ['10']
+            pageSizeOptions: ['20']
         };
         const columns = [
             {
@@ -71,6 +75,15 @@ export default defineComponent({
             },{
             title: '编码',
             dataIndex: 'symbol',
+            },{
+            title: '今收',
+            dataIndex: 'close',
+            },{
+            title: '昨收',
+            dataIndex: 'preClose',
+            },{
+            title: '涨(跌)幅',
+            dataIndex: 'pctChange',
             },{
             title: '交易日',
             dataIndex: 'day',
@@ -90,6 +103,7 @@ export default defineComponent({
                 downSource.value.length = 0
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 rsp.forEach((val:any, _idx:number, _array:[]) => {
+                    val.pctChange = val.pctChange.toFixed(2)
                     if(val.flag === 1){
                         upSource.value.push(val)
                     }else{
@@ -118,6 +132,7 @@ export default defineComponent({
         HttpGet(apiUrl, (rsp:any)=>{
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             rsp.forEach((val:any, _idx:number, _array:[]) => {
+                val.pctChange = val.pctChange.toFixed(2)
                 if(val.flag === 1){
                     this.upSource.push(val)
                 }else{
