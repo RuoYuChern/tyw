@@ -1,28 +1,28 @@
 <template>
     <a-row class="kline-row">
-        <a-col span="12">
+        <a-col span="24">
             <div id="prcieChart" v-if="priceSeries.length > 0">
                 <apexchart type="line" height="350" :options="chartLineOpt" :series="priceSeries"></apexchart>
             </div>
         </a-col>
-        <a-col span="12">
+        <!-- <a-col span="12">
             <div id="mtnChart" v-if="mtnSeries.length > 0">
                 <apexchart type="line" height="350" :options="chartLineOpt" :series="mtnSeries"></apexchart>
             </div>            
-        </a-col>       
+        </a-col>        -->
     </a-row>
     <a-row class="kline-row">
-        <a-col span="12">
+        <a-col span="24">
             <div id="maChart" v-if="maSeries.length > 0">
                 <apexchart type="line" height="350" :options="mixLineOpt" :series="maSeries"></apexchart>
             </div>
         </a-col> 
-        <a-col span="12">
+        <!-- <a-col span="12">
             <div id="fundInChart" v-if="fundInSeries.length > 0">
                 <apexchart type="line" height="350" :options="mixLineOpt" :series="fundInSeries"></apexchart>
             </div>
             <div id="fundInChart" v-else>No Data</div>
-        </a-col>         
+        </a-col>          -->
     </a-row>
 </template>
 
@@ -95,8 +95,7 @@ export default defineComponent({
             this.priceSeries.push(close)
             this.priceSeries.push(lsma)
             this.priceSeries.push(ssma)
-            //this.priceSeries.push(mtn)
-
+            
             this.maSeries.length = 0
             this.maSeries.push(vol)
             this.maSeries.push(close)

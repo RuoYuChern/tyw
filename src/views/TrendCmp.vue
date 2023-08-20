@@ -20,18 +20,18 @@
         </a-form>
     </a-row>
     <a-row class="kline-row">
-        <a-col span="12">
+        <a-col span="24">
             <div id="prcieChart" v-if="priceSeries.length > 0">
                 <apexchart type="line" height="350" :options="chartLineOpt" :series="priceSeries"></apexchart>
             </div>
             <div id="prcieChart" v-else>No Data</div>
         </a-col>
-        <a-col span="12">
+        <!-- <a-col span="12">
             <div id="mtnChart" v-if="mtnSeries.length > 0">
                 <apexchart type="line" height="350" :options="chartLineOpt" :series="mtnSeries"></apexchart>
             </div>
             <div id="mtnChart" v-else>No Data</div>            
-        </a-col>       
+        </a-col>        -->
     </a-row>
     <a-row class="kline-row">
         <a-col span="24">
