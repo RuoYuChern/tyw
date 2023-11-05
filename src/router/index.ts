@@ -72,6 +72,13 @@ const router = createRouter({
       meta:{
         requiresAuth:true 
       }
+    },{
+      path:"/quant-cal",
+      name:"quant-cal",
+      component: ()=> import('../views/QuantCal.vue'),
+      meta:{
+        requiresAuth:true 
+      }
     },            
   ]
 })

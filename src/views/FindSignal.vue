@@ -1,5 +1,5 @@
 <template>
-    <a-row class="opt-row" :gutter="16" justify="space-between" align="middle">
+    <a-row class="opt-row" justify="center">
         <a-col :span="12">
             <div class="gutter-box">
                 <a-form layout="inline" :model="optState" @finish="getData" @finishFailed="handleOptFinishFailed">
@@ -206,7 +206,6 @@ export default defineComponent({
 .opt-row{
     height: 70px;
     background-color: #FFF;
-    padding-left: 5px;
     margin-bottom: 10px;
 }
 
@@ -216,7 +215,6 @@ export default defineComponent({
 }
 
 .gutter-box {
-    background-color: #FFF;
     padding: 8px 0;
 }
 </style>
